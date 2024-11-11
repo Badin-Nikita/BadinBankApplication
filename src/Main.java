@@ -2,28 +2,18 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Account account = new Account(1233, 1100, "Семен");
+        Account.setAnnualInterestRate(7.5);
 
-        List<Account> accounts = new ArrayList<Account>();
+        account.deposit(500);
+        account.deposit(600);
+        account.deposit(700);
 
-        Random rnd = new Random();
-        for (int i = 0; i < 10; i++){
-            accounts.add(new Account(i, Math.round(rnd.nextDouble(1000, 500000))));
-        }
+        account.withdraw(700);
+        account.withdraw(600);
+        account.withdraw(100);
 
-        while (true) {
-            System.out.print("Введите ID счета: ");
-            int inputId = scanner.nextInt();
-
-            Account account = findAccountById(accounts, inputId);
-
-            if (account != null) {
-                System.out.println("ID подтвержден.");
-                mainMenu(account);
-            } else {
-                System.out.println("Неверный ID, попробуйте еще раз.");
-            }
-        }
+        account.printSummary();
     }
 
     public static void mainMenu(Account account) {
@@ -35,7 +25,8 @@ public class Main {
             System.out.println("3. Внести деньги");
             System.out.println("4. Рассчитать ежемесячные проценты");
             System.out.println("5. Показать дату создания счета");
-            System.out.println("6. Выход");
+            System.out.println("6. Сводка по аккаунту");
+            System.out.println("7. Выход");
 
             System.out.print("Выберите действие: ");
             int choice = scanner.nextInt();
@@ -62,6 +53,9 @@ public class Main {
                     System.out.println("Дата создания счета: " + account.getdateCreated());
                     break;
                 case 6:
+                    account.printSummary();;
+                    return;
+                case 7:
                     System.out.println("Выход из системы.");
                     return;
                 default:
